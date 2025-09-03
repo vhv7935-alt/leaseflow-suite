@@ -61,6 +61,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				srs: {
+					header: 'hsl(var(--srs-header))',
+					section: 'hsl(var(--srs-section))',
+					'table-header': 'hsl(var(--srs-table-header))',
+					'table-row': 'hsl(var(--srs-table-row))',
+					requirement: 'hsl(var(--srs-requirement))',
+					'test-case': 'hsl(var(--srs-test-case))',
+					future: 'hsl(var(--srs-future))'
 				}
 			},
 			borderRadius: {
