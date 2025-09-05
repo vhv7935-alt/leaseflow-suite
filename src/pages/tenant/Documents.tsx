@@ -1,18 +1,25 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  FileText, 
-  Upload, 
-  Download, 
-  Eye, 
+import {
+  FileText,
+  Upload,
+  Download,
+  Eye,
   Search,
   Filter,
   File,
   CheckCircle,
   Clock,
-  Calendar
+  Calendar,
 } from "lucide-react";
 
 const Documents = () => {
@@ -27,7 +34,7 @@ const Documents = () => {
       dateModified: "2023-06-01",
       status: "Active",
       description: "Main lease agreement for current tenancy period",
-      expiryDate: "2024-05-31"
+      expiryDate: "2024-05-31",
     },
     {
       id: 2,
@@ -39,7 +46,7 @@ const Documents = () => {
       dateModified: "2023-08-15",
       status: "Active",
       description: "Amendment allowing pet ownership",
-      expiryDate: null
+      expiryDate: null,
     },
     {
       id: 3,
@@ -51,7 +58,7 @@ const Documents = () => {
       dateModified: "2023-06-01",
       status: "Completed",
       description: "Property condition at move-in",
-      expiryDate: null
+      expiryDate: null,
     },
     {
       id: 4,
@@ -63,7 +70,7 @@ const Documents = () => {
       dateModified: "2024-01-01",
       status: "Active",
       description: "Rent payment confirmation for January 2024",
-      expiryDate: null
+      expiryDate: null,
     },
     {
       id: 5,
@@ -75,7 +82,7 @@ const Documents = () => {
       dateModified: "2023-12-01",
       status: "Active",
       description: "Rent payment confirmation for December 2023",
-      expiryDate: null
+      expiryDate: null,
     },
     {
       id: 6,
@@ -87,7 +94,7 @@ const Documents = () => {
       dateModified: "2023-12-01",
       status: "Current",
       description: "Property insurance details and tenant responsibilities",
-      expiryDate: "2024-12-01"
+      expiryDate: "2024-12-01",
     },
     {
       id: 7,
@@ -99,7 +106,7 @@ const Documents = () => {
       dateModified: "2023-06-01",
       status: "Template",
       description: "Template for submitting maintenance requests",
-      expiryDate: null
+      expiryDate: null,
     },
     {
       id: 8,
@@ -111,73 +118,108 @@ const Documents = () => {
       dateModified: "2024-01-01",
       status: "Current",
       description: "Emergency contacts and procedures",
-      expiryDate: null
-    }
+      expiryDate: null,
+    },
   ];
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case "Lease": return "bg-primary text-white";
-      case "Amendment": return "bg-info text-white";
-      case "Receipt": return "bg-success text-white";
-      case "Inspection": return "bg-warning text-white";
-      case "Insurance": return "bg-muted text-foreground";
-      case "Form": return "bg-muted text-foreground";
-      case "Contact": return "bg-info text-white";
-      default: return "bg-muted";
+      case "Lease":
+        return "bg-primary text-white";
+      case "Amendment":
+        return "bg-info text-white";
+      case "Receipt":
+        return "bg-success text-white";
+      case "Inspection":
+        return "bg-warning text-white";
+      case "Insurance":
+        return "bg-muted text-foreground";
+      case "Form":
+        return "bg-muted text-foreground";
+      case "Contact":
+        return "bg-info text-white";
+      default:
+        return "bg-muted";
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Active": return "bg-success text-white";
-      case "Current": return "bg-success text-white";
-      case "Completed": return "bg-info text-white";
-      case "Template": return "bg-muted text-foreground";
-      case "Expired": return "bg-danger text-white";
-      default: return "bg-muted";
+      case "Active":
+        return "bg-success text-white";
+      case "Current":
+        return "bg-success text-white";
+      case "Completed":
+        return "bg-info text-white";
+      case "Template":
+        return "bg-muted text-foreground";
+      case "Expired":
+        return "bg-danger text-white";
+      default:
+        return "bg-muted";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "Active": return CheckCircle;
-      case "Current": return CheckCircle;
-      case "Completed": return CheckCircle;
-      case "Template": return File;
-      case "Expired": return Clock;
-      default: return File;
+      case "Active":
+        return CheckCircle;
+      case "Current":
+        return CheckCircle;
+      case "Completed":
+        return CheckCircle;
+      case "Template":
+        return File;
+      case "Expired":
+        return Clock;
+      default:
+        return File;
     }
   };
 
   const documentsByType = {
-    "Lease Documents": documents.filter(d => d.type === "Lease" || d.type === "Amendment"),
-    "Receipts & Payments": documents.filter(d => d.type === "Receipt"),
-    "Inspection & Reports": documents.filter(d => d.type === "Inspection"),
-    "Insurance & Forms": documents.filter(d => d.type === "Insurance" || d.type === "Form" || d.type === "Contact")
+    "Lease Documents": documents.filter(
+      (d) => d.type === "Lease" || d.type === "Amendment"
+    ),
+    "Receipts & Payments": documents.filter((d) => d.type === "Receipt"),
+    "Inspection & Reports": documents.filter((d) => d.type === "Inspection"),
+    "Insurance & Forms": documents.filter(
+      (d) => d.type === "Insurance" || d.type === "Form" || d.type === "Contact"
+    ),
   };
 
   const stats = {
     total: documents.length,
-    active: documents.filter(d => d.status === "Active" || d.status === "Current").length,
-    receipts: documents.filter(d => d.type === "Receipt").length,
-    leases: documents.filter(d => d.type === "Lease" || d.type === "Amendment").length
+    active: documents.filter(
+      (d) => d.status === "Active" || d.status === "Current"
+    ).length,
+    receipts: documents.filter((d) => d.type === "Receipt").length,
+    leases: documents.filter(
+      (d) => d.type === "Lease" || d.type === "Amendment"
+    ).length,
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">My Documents</h1>
-          <p className="text-muted-foreground">Access your lease agreements, receipts, and property documents</p>
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+            My Documents
+          </h1>
+          <p className="text-slate-600 text-lg">
+            Access your lease agreements, receipts, and property documents
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2">
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="gap-2 border-slate-200 hover:bg-slate-100 rounded-xl"
+          >
             <Download className="w-4 h-4" />
             Download All
           </Button>
-          <Button className="gap-2">
+          <Button className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl">
             <Upload className="w-4 h-4" />
             Upload Document
           </Button>
@@ -188,7 +230,9 @@ const Documents = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Documents</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Documents
+            </CardTitle>
             <FileText className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
@@ -198,17 +242,23 @@ const Documents = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Documents</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Active Documents
+            </CardTitle>
             <CheckCircle className="h-4 w-4 text-success" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">{stats.active}</div>
+            <div className="text-2xl font-bold text-success">
+              {stats.active}
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Lease Documents</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Lease Documents
+            </CardTitle>
             <File className="h-4 w-4 text-info" />
           </CardHeader>
           <CardContent>
@@ -218,11 +268,15 @@ const Documents = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Payment Receipts</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Payment Receipts
+            </CardTitle>
             <Calendar className="h-4 w-4 text-warning" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-warning">{stats.receipts}</div>
+            <div className="text-2xl font-bold text-warning">
+              {stats.receipts}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -233,8 +287,8 @@ const Documents = () => {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input 
-                placeholder="Search documents by name or type..." 
+              <Input
+                placeholder="Search documents by name or type..."
                 className="pl-10"
               />
             </div>
@@ -260,39 +314,57 @@ const Documents = () => {
               <FileText className="w-5 h-5" />
               {category}
             </CardTitle>
-            <CardDescription>{docs.length} documents in this category</CardDescription>
+            <CardDescription>
+              {docs.length} documents in this category
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {docs.map((document) => {
                 const StatusIcon = getStatusIcon(document.status);
                 return (
-                  <div key={document.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div
+                    key={document.id}
+                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                  >
                     <div className="flex items-center gap-4 flex-1">
                       <div className="p-2 rounded-lg bg-primary/10">
                         <StatusIcon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium truncate">{document.name}</h3>
-                          <Badge className={`text-xs ${getTypeColor(document.type)}`}>
+                          <h3 className="font-medium truncate">
+                            {document.name}
+                          </h3>
+                          <Badge
+                            className={`text-xs ${getTypeColor(document.type)}`}
+                          >
                             {document.type}
                           </Badge>
-                          <Badge className={`text-xs ${getStatusColor(document.status)}`}>
+                          <Badge
+                            className={`text-xs ${getStatusColor(
+                              document.status
+                            )}`}
+                          >
                             {document.status}
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-2">{document.description}</p>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          {document.description}
+                        </p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-muted-foreground">
                           <div>
-                            <span className="font-medium">Size:</span> {document.size} • {document.fileType}
+                            <span className="font-medium">Size:</span>{" "}
+                            {document.size} • {document.fileType}
                           </div>
                           <div>
-                            <span className="font-medium">Uploaded:</span> {document.dateUploaded}
+                            <span className="font-medium">Uploaded:</span>{" "}
+                            {document.dateUploaded}
                           </div>
                           {document.expiryDate && (
                             <div>
-                              <span className="font-medium">Expires:</span> {document.expiryDate}
+                              <span className="font-medium">Expires:</span>{" "}
+                              {document.expiryDate}
                             </div>
                           )}
                         </div>

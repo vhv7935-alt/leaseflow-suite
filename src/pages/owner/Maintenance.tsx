@@ -1,18 +1,25 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Wrench, 
-  AlertTriangle, 
-  Clock, 
+import {
+  Wrench,
+  AlertTriangle,
+  Clock,
   CheckCircle,
   Plus,
   Search,
   Filter,
   Eye,
   Users,
-  Calendar
+  Calendar,
 } from "lucide-react";
 
 const Maintenance = () => {
@@ -29,7 +36,8 @@ const Maintenance = () => {
       dateScheduled: "2024-01-16",
       assignedTo: "Mike's Plumbing",
       estimatedCost: 150,
-      description: "Kitchen faucet has been dripping constantly, causing water waste and noise."
+      description:
+        "Kitchen faucet has been dripping constantly, causing water waste and noise.",
     },
     {
       id: 2,
@@ -43,7 +51,8 @@ const Maintenance = () => {
       dateScheduled: null,
       assignedTo: null,
       estimatedCost: 200,
-      description: "Main light fixture in living room stopped working suddenly."
+      description:
+        "Main light fixture in living room stopped working suddenly.",
     },
     {
       id: 3,
@@ -57,7 +66,8 @@ const Maintenance = () => {
       dateScheduled: "2024-01-13",
       assignedTo: "City Glass Repair",
       estimatedCost: 250,
-      description: "Small crack in bedroom window, needs replacement for security."
+      description:
+        "Small crack in bedroom window, needs replacement for security.",
     },
     {
       id: 4,
@@ -71,56 +81,77 @@ const Maintenance = () => {
       dateScheduled: "2024-01-17",
       assignedTo: "Climate Control Pro",
       estimatedCost: 400,
-      description: "Heating system not reaching set temperature, cold air coming out."
-    }
+      description:
+        "Heating system not reaching set temperature, cold air coming out.",
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Completed": return "bg-success text-white";
-      case "In Progress": return "bg-warning text-white";
-      case "Scheduled": return "bg-info text-white";
-      case "Pending": return "bg-muted text-foreground";
-      default: return "bg-muted";
+      case "Completed":
+        return "bg-success text-white";
+      case "In Progress":
+        return "bg-warning text-white";
+      case "Scheduled":
+        return "bg-info text-white";
+      case "Pending":
+        return "bg-muted text-foreground";
+      default:
+        return "bg-muted";
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "High": return "bg-danger text-white";
-      case "Medium": return "bg-warning text-white";
-      case "Low": return "bg-success text-white";
-      default: return "bg-muted";
+      case "High":
+        return "bg-danger text-white";
+      case "Medium":
+        return "bg-warning text-white";
+      case "Low":
+        return "bg-success text-white";
+      default:
+        return "bg-muted";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "Completed": return CheckCircle;
-      case "In Progress": return Wrench;
-      case "Scheduled": return Calendar;
-      case "Pending": return Clock;
-      default: return AlertTriangle;
+      case "Completed":
+        return CheckCircle;
+      case "In Progress":
+        return Wrench;
+      case "Scheduled":
+        return Calendar;
+      case "Pending":
+        return Clock;
+      default:
+        return AlertTriangle;
     }
   };
 
   const stats = {
     total: maintenanceRequests.length,
-    pending: maintenanceRequests.filter(r => r.status === "Pending").length,
-    inProgress: maintenanceRequests.filter(r => r.status === "In Progress").length,
-    completed: maintenanceRequests.filter(r => r.status === "Completed").length,
-    totalCost: maintenanceRequests.reduce((sum, r) => sum + r.estimatedCost, 0)
+    pending: maintenanceRequests.filter((r) => r.status === "Pending").length,
+    inProgress: maintenanceRequests.filter((r) => r.status === "In Progress")
+      .length,
+    completed: maintenanceRequests.filter((r) => r.status === "Completed")
+      .length,
+    totalCost: maintenanceRequests.reduce((sum, r) => sum + r.estimatedCost, 0),
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Maintenance</h1>
-          <p className="text-muted-foreground">Manage property maintenance and repair requests</p>
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+            Maintenance
+          </h1>
+          <p className="text-slate-600 text-lg">
+            Manage property maintenance and repair requests
+          </p>
         </div>
-        <Button className="gap-2">
+        <Button className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl">
           <Plus className="w-4 h-4" />
           Add Request
         </Button>
@@ -128,53 +159,83 @@ const Maintenance = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Requests</CardTitle>
-            <Wrench className="h-4 w-4 text-primary" />
+        <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-blue-50 to-indigo-100 hover:from-blue-100 hover:to-indigo-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold text-slate-700">
+              Total Requests
+            </CardTitle>
+            <div className="p-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <Wrench className="h-4 w-4 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">{stats.total}</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+              {stats.total}
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+        <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-slate-50 to-gray-100 hover:from-slate-100 hover:to-gray-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold text-slate-700">
+              Pending
+            </CardTitle>
+            <div className="p-2 bg-gradient-to-br from-slate-600 to-gray-700 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <Clock className="h-4 w-4 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-muted-foreground">{stats.pending}</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-slate-600 to-gray-700 bg-clip-text text-transparent">
+              {stats.pending}
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">In Progress</CardTitle>
-            <Wrench className="h-4 w-4 text-warning" />
+        <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-amber-50 to-orange-100 hover:from-amber-100 hover:to-orange-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold text-slate-700">
+              In Progress
+            </CardTitle>
+            <div className="p-2 bg-gradient-to-br from-amber-600 to-orange-700 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <Wrench className="h-4 w-4 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-warning">{stats.inProgress}</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-700 bg-clip-text text-transparent">
+              {stats.inProgress}
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed</CardTitle>
-            <CheckCircle className="h-4 w-4 text-success" />
+        <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-emerald-50 to-green-100 hover:from-emerald-100 hover:to-green-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold text-slate-700">
+              Completed
+            </CardTitle>
+            <div className="p-2 bg-gradient-to-br from-emerald-600 to-green-700 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <CheckCircle className="h-4 w-4 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">{stats.completed}</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-700 bg-clip-text text-transparent">
+              {stats.completed}
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Cost</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-info" />
+        <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-purple-50 to-violet-100 hover:from-purple-100 hover:to-violet-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold text-slate-700">
+              Total Cost
+            </CardTitle>
+            <div className="p-2 bg-gradient-to-br from-purple-600 to-violet-700 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-200">
+              <AlertTriangle className="h-4 w-4 text-white" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-info">${stats.totalCost}</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-violet-700 bg-clip-text text-transparent">
+              ${stats.totalCost}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -185,8 +246,8 @@ const Maintenance = () => {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input 
-                placeholder="Search by request title, tenant, or property..." 
+              <Input
+                placeholder="Search by request title, tenant, or property..."
                 className="pl-10"
               />
             </div>
@@ -213,7 +274,10 @@ const Maintenance = () => {
         {maintenanceRequests.map((request) => {
           const StatusIcon = getStatusIcon(request.status);
           return (
-            <Card key={request.id} className="hover:shadow-lg transition-shadow">
+            <Card
+              key={request.id}
+              className="hover:shadow-lg transition-shadow"
+            >
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4 flex-1">
@@ -222,50 +286,69 @@ const Maintenance = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-lg font-semibold">{request.title}</h3>
-                        <Badge className={`text-xs ${getStatusColor(request.status)}`}>
+                        <h3 className="text-lg font-semibold">
+                          {request.title}
+                        </h3>
+                        <Badge
+                          className={`text-xs ${getStatusColor(
+                            request.status
+                          )}`}
+                        >
                           {request.status}
                         </Badge>
-                        <Badge className={`text-xs ${getPriorityColor(request.priority)}`}>
+                        <Badge
+                          className={`text-xs ${getPriorityColor(
+                            request.priority
+                          )}`}
+                        >
                           {request.priority}
                         </Badge>
                       </div>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-muted-foreground mb-3">
                         <div>
-                          <span className="font-medium">Tenant:</span> {request.tenant}
+                          <span className="font-medium">Tenant:</span>{" "}
+                          {request.tenant}
                         </div>
                         <div>
-                          <span className="font-medium">Property:</span> {request.property}
+                          <span className="font-medium">Property:</span>{" "}
+                          {request.property}
                         </div>
                         <div>
-                          <span className="font-medium">Category:</span> {request.category}
+                          <span className="font-medium">Category:</span>{" "}
+                          {request.category}
                         </div>
                         <div>
-                          <span className="font-medium">Submitted:</span> {request.dateSubmitted}
+                          <span className="font-medium">Submitted:</span>{" "}
+                          {request.dateSubmitted}
                         </div>
                       </div>
-                      
+
                       {request.assignedTo && (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-muted-foreground mb-3">
                           <div>
-                            <span className="font-medium">Assigned to:</span> {request.assignedTo}
+                            <span className="font-medium">Assigned to:</span>{" "}
+                            {request.assignedTo}
                           </div>
                           {request.dateScheduled && (
                             <div>
-                              <span className="font-medium">Scheduled:</span> {request.dateScheduled}
+                              <span className="font-medium">Scheduled:</span>{" "}
+                              {request.dateScheduled}
                             </div>
                           )}
                           <div>
-                            <span className="font-medium">Est. Cost:</span> ${request.estimatedCost}
+                            <span className="font-medium">Est. Cost:</span> $
+                            {request.estimatedCost}
                           </div>
                         </div>
                       )}
-                      
-                      <p className="text-sm text-muted-foreground">{request.description}</p>
+
+                      <p className="text-sm text-muted-foreground">
+                        {request.description}
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex gap-2 ml-4">
                     <Button size="sm" variant="outline" className="gap-2">
                       <Eye className="w-4 h-4" />

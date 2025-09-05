@@ -1,13 +1,19 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Home, 
-  DollarSign, 
-  FileText, 
-  Wrench, 
-  Calendar, 
+import {
+  Home,
+  DollarSign,
+  FileText,
+  Wrench,
+  Calendar,
   Upload,
   Plus,
   Eye,
@@ -15,7 +21,7 @@ import {
   Mail,
   AlertTriangle,
   Clock,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 
 const TenantDashboard = () => {
@@ -26,7 +32,7 @@ const TenantDashboard = () => {
     monthlyRent: 1200,
     leaseStart: "2023-06-01",
     leaseEnd: "2024-05-31",
-    owner: "Sarah Property Management"
+    owner: "Sarah Property Management",
   };
 
   const rentStatus = {
@@ -35,22 +41,73 @@ const TenantDashboard = () => {
     amountDue: 0,
     nextDue: "2024-02-01",
     paymentHistory: [
-      { month: "December 2023", amount: 1200, status: "paid", date: "2023-12-01" },
-      { month: "November 2023", amount: 1200, status: "paid", date: "2023-11-01" },
-      { month: "October 2023", amount: 1200, status: "paid", date: "2023-10-01" },
-    ]
+      {
+        month: "December 2023",
+        amount: 1200,
+        status: "paid",
+        date: "2023-12-01",
+      },
+      {
+        month: "November 2023",
+        amount: 1200,
+        status: "paid",
+        date: "2023-11-01",
+      },
+      {
+        month: "October 2023",
+        amount: 1200,
+        status: "paid",
+        date: "2023-10-01",
+      },
+    ],
   };
 
   const maintenanceRequests = [
-    { id: 1, issue: "Leaky faucet in kitchen", category: "Plumbing", status: "In Progress", date: "2024-01-14", priority: "Medium" },
-    { id: 2, issue: "Thermostat not working", category: "HVAC", status: "Pending", date: "2024-01-10", priority: "High" },
-    { id: 3, issue: "Light bulb replacement", category: "Electrical", status: "Completed", date: "2024-01-05", priority: "Low" },
+    {
+      id: 1,
+      issue: "Leaky faucet in kitchen",
+      category: "Plumbing",
+      status: "In Progress",
+      date: "2024-01-14",
+      priority: "Medium",
+    },
+    {
+      id: 2,
+      issue: "Thermostat not working",
+      category: "HVAC",
+      status: "Pending",
+      date: "2024-01-10",
+      priority: "High",
+    },
+    {
+      id: 3,
+      issue: "Light bulb replacement",
+      category: "Electrical",
+      status: "Completed",
+      date: "2024-01-05",
+      priority: "Low",
+    },
   ];
 
   const documents = [
-    { name: "Lease Agreement", type: "PDF", size: "2.4 MB", date: "2023-06-01" },
-    { name: "Rent Receipt - Jan 2024", type: "PDF", size: "156 KB", date: "2024-01-01" },
-    { name: "Move-in Checklist", type: "PDF", size: "890 KB", date: "2023-06-01" },
+    {
+      name: "Lease Agreement",
+      type: "PDF",
+      size: "2.4 MB",
+      date: "2023-06-01",
+    },
+    {
+      name: "Rent Receipt - Jan 2024",
+      type: "PDF",
+      size: "156 KB",
+      date: "2024-01-01",
+    },
+    {
+      name: "Move-in Checklist",
+      type: "PDF",
+      size: "890 KB",
+      date: "2023-06-01",
+    },
   ];
 
   const leaseInfo = {
@@ -59,46 +116,79 @@ const TenantDashboard = () => {
     autoRenewal: false,
     renewalOption: true,
     lastRenewalDate: null,
-    earlyTerminationAllowed: false
+    earlyTerminationAllowed: false,
   };
 
   const leaseDocuments = [
-    { name: "Current Lease Agreement", type: "PDF", size: "2.4 MB", date: "2023-06-01", status: "Active" },
-    { name: "Lease Amendment #1", type: "PDF", size: "890 KB", date: "2023-08-15", status: "Active" },
-    { name: "Renewal Notice Template", type: "PDF", size: "456 KB", date: "2023-06-01", status: "Template" },
+    {
+      name: "Current Lease Agreement",
+      type: "PDF",
+      size: "2.4 MB",
+      date: "2023-06-01",
+      status: "Active",
+    },
+    {
+      name: "Lease Amendment #1",
+      type: "PDF",
+      size: "890 KB",
+      date: "2023-08-15",
+      status: "Active",
+    },
+    {
+      name: "Renewal Notice Template",
+      type: "PDF",
+      size: "456 KB",
+      date: "2023-06-01",
+      status: "Template",
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "paid": return "bg-success text-white";
-      case "Completed": return "bg-success text-white";
-      case "In Progress": return "bg-warning text-white";
-      case "Pending": return "bg-info text-white";
-      case "overdue": return "bg-danger text-white";
-      default: return "bg-muted";
+      case "paid":
+        return "bg-success text-white";
+      case "Completed":
+        return "bg-success text-white";
+      case "In Progress":
+        return "bg-warning text-white";
+      case "Pending":
+        return "bg-info text-white";
+      case "overdue":
+        return "bg-danger text-white";
+      default:
+        return "bg-muted";
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "High": return "bg-danger text-white";
-      case "Medium": return "bg-warning text-white";
-      case "Low": return "bg-success text-white";
-      default: return "bg-muted";
+      case "High":
+        return "bg-danger text-white";
+      case "Medium":
+        return "bg-warning text-white";
+      case "Low":
+        return "bg-success text-white";
+      default:
+        return "bg-muted";
     }
   };
 
-  const rentProgress = ((rentStatus.amountPaid / tenantInfo.monthlyRent) * 100);
+  const rentProgress = (rentStatus.amountPaid / tenantInfo.monthlyRent) * 100;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Welcome back, {tenantInfo.name}!</h1>
-          <p className="text-muted-foreground">{tenantInfo.property}</p>
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+            Welcome back, {tenantInfo.name}!
+          </h1>
+          <p className="text-slate-600 text-lg">{tenantInfo.property}</p>
         </div>
-        <Button className="gap-2" variant="outline">
+        <Button
+          className="gap-2 border-slate-200 hover:bg-slate-100 rounded-xl"
+          variant="outline"
+        >
           <Phone className="w-4 h-4" />
           Contact Owner
         </Button>
@@ -121,7 +211,11 @@ const TenantDashboard = () => {
               <p className="text-sm text-muted-foreground">Amount Paid</p>
             </div>
             <div className="text-center">
-              <div className={`text-3xl font-bold mb-2 ${rentStatus.amountDue > 0 ? 'text-danger' : 'text-success'}`}>
+              <div
+                className={`text-3xl font-bold mb-2 ${
+                  rentStatus.amountDue > 0 ? "text-danger" : "text-success"
+                }`}
+              >
                 ${rentStatus.amountDue}
               </div>
               <p className="text-sm text-muted-foreground">Amount Due</p>
@@ -142,7 +236,9 @@ const TenantDashboard = () => {
           </div>
           {rentStatus.amountDue === 0 && (
             <div className="mt-4 p-3 bg-success/10 border border-success/20 rounded-lg text-center">
-              <p className="text-success font-medium">✓ You're all caught up! Next payment due {rentStatus.nextDue}</p>
+              <p className="text-success font-medium">
+                ✓ You're all caught up! Next payment due {rentStatus.nextDue}
+              </p>
             </div>
           )}
         </CardContent>
@@ -163,15 +259,22 @@ const TenantDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {rentStatus.paymentHistory.map((payment, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-4 border rounded-lg"
+              >
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium">{payment.month}</span>
-                    <Badge className={`text-xs ${getStatusColor(payment.status)}`}>
+                    <Badge
+                      className={`text-xs ${getStatusColor(payment.status)}`}
+                    >
                       {payment.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">Paid on: {payment.date}</p>
+                  <p className="text-sm text-muted-foreground">
+                    Paid on: {payment.date}
+                  </p>
                 </div>
                 <div className="text-right">
                   <div className="font-bold text-lg">${payment.amount}</div>
@@ -199,21 +302,34 @@ const TenantDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {maintenanceRequests.map((request) => (
-              <div key={request.id} className="flex items-center justify-between p-4 border rounded-lg">
+              <div
+                key={request.id}
+                className="flex items-center justify-between p-4 border rounded-lg"
+              >
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium">{request.issue}</span>
-                    <Badge className={`text-xs ${getPriorityColor(request.priority)}`}>
+                    <Badge
+                      className={`text-xs ${getPriorityColor(
+                        request.priority
+                      )}`}
+                    >
                       {request.priority}
                     </Badge>
                   </div>
                   <div className="flex items-center gap-2 mb-1">
-                    <Badge className={`text-xs ${getStatusColor(request.status)}`}>
+                    <Badge
+                      className={`text-xs ${getStatusColor(request.status)}`}
+                    >
                       {request.status}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">{request.category}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {request.category}
+                    </span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Submitted: {request.date}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Submitted: {request.date}
+                  </p>
                 </div>
                 <Button size="sm" variant="outline">
                   View Details
@@ -231,38 +347,61 @@ const TenantDashboard = () => {
             <FileText className="w-5 h-5 text-info" />
             Lease Management
           </CardTitle>
-          <CardDescription>Your current lease agreement status and options</CardDescription>
+          <CardDescription>
+            Your current lease agreement status and options
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className={`text-2xl font-bold mb-2 ${leaseInfo.status === 'Active' ? 'text-success' : 'text-warning'}`}>
+              <div
+                className={`text-2xl font-bold mb-2 ${
+                  leaseInfo.status === "Active"
+                    ? "text-success"
+                    : "text-warning"
+                }`}
+              >
                 {leaseInfo.status}
               </div>
               <p className="text-sm text-muted-foreground">Current Status</p>
             </div>
             <div className="text-center">
-              <div className={`text-2xl font-bold mb-2 ${leaseInfo.daysUntilExpiry <= 30 ? 'text-warning' : 'text-primary'}`}>
+              <div
+                className={`text-2xl font-bold mb-2 ${
+                  leaseInfo.daysUntilExpiry <= 30
+                    ? "text-warning"
+                    : "text-primary"
+                }`}
+              >
                 {leaseInfo.daysUntilExpiry}
               </div>
               <p className="text-sm text-muted-foreground">Days Until Expiry</p>
             </div>
             <div className="text-center">
-              <div className={`text-lg font-semibold mb-2 ${leaseInfo.renewalOption ? 'text-success' : 'text-muted-foreground'}`}>
-                {leaseInfo.renewalOption ? 'Available' : 'Not Available'}
+              <div
+                className={`text-lg font-semibold mb-2 ${
+                  leaseInfo.renewalOption
+                    ? "text-success"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {leaseInfo.renewalOption ? "Available" : "Not Available"}
               </div>
               <p className="text-sm text-muted-foreground">Renewal Option</p>
             </div>
           </div>
-          
+
           {leaseInfo.daysUntilExpiry <= 60 && (
             <div className="mt-6 p-4 bg-warning/10 border border-warning/20 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-warning" />
-                <span className="font-medium text-warning">Lease Expiring Soon</span>
+                <span className="font-medium text-warning">
+                  Lease Expiring Soon
+                </span>
               </div>
               <p className="text-sm text-muted-foreground mb-3">
-                Your lease expires on {tenantInfo.leaseEnd}. Consider renewing to avoid any disruption.
+                Your lease expires on {tenantInfo.leaseEnd}. Consider renewing
+                to avoid any disruption.
               </p>
               <div className="flex gap-2">
                 <Button size="sm" className="gap-2">
@@ -296,7 +435,9 @@ const TenantDashboard = () => {
               </div>
               <div>
                 <p className="text-sm font-medium">Monthly Rent</p>
-                <p className="text-muted-foreground">${tenantInfo.monthlyRent}</p>
+                <p className="text-muted-foreground">
+                  ${tenantInfo.monthlyRent}
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium">Lease Start</p>
@@ -332,7 +473,9 @@ const TenantDashboard = () => {
                 <FileText className="w-5 h-5" />
                 Lease Documents
               </CardTitle>
-              <CardDescription>Lease agreements and related documents</CardDescription>
+              <CardDescription>
+                Lease agreements and related documents
+              </CardDescription>
             </div>
             <Button size="sm" variant="outline" className="gap-2">
               <Upload className="w-4 h-4" />
@@ -341,7 +484,10 @@ const TenantDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {leaseDocuments.map((doc, index) => (
-              <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+              <div
+                key={index}
+                className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors"
+              >
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <FileText className="w-8 h-8 text-primary" />
@@ -354,7 +500,13 @@ const TenantDashboard = () => {
                     <p className="text-xs text-muted-foreground">
                       {doc.type} • {doc.size} • {doc.date}
                     </p>
-                    <Badge className={`text-xs mt-1 ${doc.status === 'Active' ? 'bg-success text-white' : 'bg-muted'}`}>
+                    <Badge
+                      className={`text-xs mt-1 ${
+                        doc.status === "Active"
+                          ? "bg-success text-white"
+                          : "bg-muted"
+                      }`}
+                    >
                       {doc.status}
                     </Badge>
                   </div>
@@ -376,7 +528,9 @@ const TenantDashboard = () => {
               <FileText className="w-5 h-5" />
               Other Documents
             </CardTitle>
-            <CardDescription>Receipts and other property documents</CardDescription>
+            <CardDescription>
+              Receipts and other property documents
+            </CardDescription>
           </div>
           <Button size="sm" variant="outline" className="gap-2">
             <Upload className="w-4 h-4" />
@@ -385,7 +539,10 @@ const TenantDashboard = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           {documents.map((doc, index) => (
-            <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+            <div
+              key={index}
+              className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors"
+            >
               <div className="flex items-center gap-3">
                 <FileText className="w-8 h-8 text-primary" />
                 <div>

@@ -1,17 +1,23 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  DollarSign, 
-  Calendar, 
+import {
+  DollarSign,
+  Calendar,
   CreditCard,
   Receipt,
   TrendingUp,
   AlertCircle,
   CheckCircle,
   Clock,
-  Download
+  Download,
 } from "lucide-react";
 
 const MyRent = () => {
@@ -21,7 +27,7 @@ const MyRent = () => {
     monthlyRent: 1200,
     leaseStart: "2023-06-01",
     leaseEnd: "2024-05-31",
-    owner: "Sarah Property Management"
+    owner: "Sarah Property Management",
   };
 
   const currentRent = {
@@ -31,14 +37,14 @@ const MyRent = () => {
     dueDate: "2024-01-01",
     paidDate: "2024-01-01",
     status: "Paid",
-    paymentMethod: "Bank Transfer"
+    paymentMethod: "Bank Transfer",
   };
 
   const nextRent = {
     month: "February 2024",
     amountDue: 1200,
     dueDate: "2024-02-01",
-    daysUntilDue: 12
+    daysUntilDue: 12,
   };
 
   const paymentHistory = [
@@ -49,7 +55,7 @@ const MyRent = () => {
       paidDate: "2024-01-01",
       status: "Paid",
       method: "Bank Transfer",
-      lateFee: 0
+      lateFee: 0,
     },
     {
       month: "December 2023",
@@ -58,7 +64,7 @@ const MyRent = () => {
       paidDate: "2023-12-01",
       status: "Paid",
       method: "Bank Transfer",
-      lateFee: 0
+      lateFee: 0,
     },
     {
       month: "November 2023",
@@ -67,7 +73,7 @@ const MyRent = () => {
       paidDate: "2023-11-03",
       status: "Paid Late",
       method: "Check",
-      lateFee: 50
+      lateFee: 50,
     },
     {
       month: "October 2023",
@@ -76,7 +82,7 @@ const MyRent = () => {
       paidDate: "2023-10-01",
       status: "Paid",
       method: "Bank Transfer",
-      lateFee: 0
+      lateFee: 0,
     },
     {
       month: "September 2023",
@@ -85,48 +91,71 @@ const MyRent = () => {
       paidDate: "2023-09-01",
       status: "Paid",
       method: "Bank Transfer",
-      lateFee: 0
-    }
+      lateFee: 0,
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Paid": return "bg-success text-white";
-      case "Paid Late": return "bg-warning text-white";
-      case "Overdue": return "bg-danger text-white";
-      case "Pending": return "bg-info text-white";
-      default: return "bg-muted";
+      case "Paid":
+        return "bg-success text-white";
+      case "Paid Late":
+        return "bg-warning text-white";
+      case "Overdue":
+        return "bg-danger text-white";
+      case "Pending":
+        return "bg-info text-white";
+      default:
+        return "bg-muted";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "Paid": return CheckCircle;
-      case "Paid Late": return AlertCircle;
-      case "Overdue": return AlertCircle;
-      case "Pending": return Clock;
-      default: return Clock;
+      case "Paid":
+        return CheckCircle;
+      case "Paid Late":
+        return AlertCircle;
+      case "Overdue":
+        return AlertCircle;
+      case "Pending":
+        return Clock;
+      default:
+        return Clock;
     }
   };
 
-  const rentProgress = ((currentRent.amountPaid / currentRent.amountDue) * 100);
-  const totalPaid = paymentHistory.reduce((sum, payment) => sum + payment.amount, 0);
-  const totalLateFees = paymentHistory.reduce((sum, payment) => sum + payment.lateFee, 0);
+  const rentProgress = (currentRent.amountPaid / currentRent.amountDue) * 100;
+  const totalPaid = paymentHistory.reduce(
+    (sum, payment) => sum + payment.amount,
+    0
+  );
+  const totalLateFees = paymentHistory.reduce(
+    (sum, payment) => sum + payment.lateFee,
+    0
+  );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">My Rent</h1>
-          <p className="text-muted-foreground">Track your rent payments and history</p>
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+            My Rent
+          </h1>
+          <p className="text-slate-600 text-lg">
+            Track your rent payments and history
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2">
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="gap-2 border-slate-200 hover:bg-slate-100 rounded-xl"
+          >
             <Download className="w-4 h-4" />
             Download Statement
           </Button>
-          <Button className="gap-2">
+          <Button className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl">
             <CreditCard className="w-4 h-4" />
             Pay Rent
           </Button>
@@ -173,7 +202,9 @@ const MyRent = () => {
           </div>
           {currentRent.status === "Paid" && (
             <div className="mt-4 p-3 bg-success/10 border border-success/20 rounded-lg text-center">
-              <p className="text-success font-medium">✓ Payment completed on {currentRent.paidDate}</p>
+              <p className="text-success font-medium">
+                ✓ Payment completed on {currentRent.paidDate}
+              </p>
             </div>
           )}
         </CardContent>
@@ -193,18 +224,28 @@ const MyRent = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-2xl font-bold">${nextRent.amountDue}</div>
+                  <div className="text-2xl font-bold">
+                    ${nextRent.amountDue}
+                  </div>
                   <p className="text-muted-foreground">{nextRent.month}</p>
                 </div>
                 <div className="text-right">
-                  <div className={`text-lg font-semibold ${nextRent.daysUntilDue <= 5 ? 'text-warning' : 'text-primary'}`}>
+                  <div
+                    className={`text-lg font-semibold ${
+                      nextRent.daysUntilDue <= 5
+                        ? "text-warning"
+                        : "text-primary"
+                    }`}
+                  >
                     {nextRent.daysUntilDue} days
                   </div>
                   <p className="text-sm text-muted-foreground">until due</p>
                 </div>
               </div>
               <div className="pt-4 border-t">
-                <p className="text-sm text-muted-foreground mb-3">Due Date: {nextRent.dueDate}</p>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Due Date: {nextRent.dueDate}
+                </p>
                 <Button className="w-full gap-2">
                   <CreditCard className="w-4 h-4" />
                   Pay Now
@@ -226,18 +267,27 @@ const MyRent = () => {
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                <span className="text-sm font-medium">Total Paid (Last 6 months)</span>
-                <span className="text-lg font-bold text-success">${totalPaid.toLocaleString()}</span>
+                <span className="text-sm font-medium">
+                  Total Paid (Last 6 months)
+                </span>
+                <span className="text-lg font-bold text-success">
+                  ${totalPaid.toLocaleString()}
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                 <span className="text-sm font-medium">On-time Payments</span>
                 <span className="text-lg font-bold text-primary">
-                  {paymentHistory.filter(p => p.status === "Paid").length}/{paymentHistory.length}
+                  {paymentHistory.filter((p) => p.status === "Paid").length}/
+                  {paymentHistory.length}
                 </span>
               </div>
               <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                 <span className="text-sm font-medium">Total Late Fees</span>
-                <span className={`text-lg font-bold ${totalLateFees > 0 ? 'text-warning' : 'text-success'}`}>
+                <span
+                  className={`text-lg font-bold ${
+                    totalLateFees > 0 ? "text-warning" : "text-success"
+                  }`}
+                >
                   ${totalLateFees}
                 </span>
               </div>
@@ -263,7 +313,10 @@ const MyRent = () => {
             {paymentHistory.map((payment, index) => {
               const StatusIcon = getStatusIcon(payment.status);
               return (
-                <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                >
                   <div className="flex items-center gap-4 flex-1">
                     <div className="p-2 rounded-lg bg-muted">
                       <StatusIcon className="w-5 h-5" />
@@ -271,7 +324,11 @@ const MyRent = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-medium">{payment.month}</span>
-                        <Badge className={`text-xs ${getStatusColor(payment.status)}`}>
+                        <Badge
+                          className={`text-xs ${getStatusColor(
+                            payment.status
+                          )}`}
+                        >
                           {payment.status}
                         </Badge>
                       </div>
@@ -285,7 +342,9 @@ const MyRent = () => {
                   <div className="text-right">
                     <div className="text-lg font-bold">${payment.amount}</div>
                     {payment.lateFee > 0 && (
-                      <div className="text-sm text-warning">+${payment.lateFee} late fee</div>
+                      <div className="text-sm text-warning">
+                        +${payment.lateFee} late fee
+                      </div>
                     )}
                     <Button size="sm" variant="ghost" className="mt-1 gap-1">
                       <Receipt className="w-3 h-3" />
