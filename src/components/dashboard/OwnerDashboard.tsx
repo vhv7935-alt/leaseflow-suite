@@ -9,7 +9,10 @@ import {
   TrendingUp, 
   AlertCircle,
   Plus,
-  Eye
+  Eye,
+  FileText,
+  Calendar,
+  AlertTriangle
 } from "lucide-react";
 
 const OwnerDashboard = () => {
@@ -33,6 +36,22 @@ const OwnerDashboard = () => {
     { id: 2, tenant: "Sarah Johnson", property: "456 Oak Ave", issue: "Broken light fixture", category: "Electrical", priority: "High", date: "2024-01-13" },
     { id: 3, tenant: "Mike Wilson", property: "789 Pine St", issue: "Cracked window", category: "General", priority: "Low", date: "2024-01-12" },
   ];
+
+  const leaseStatus = [
+    { tenant: "John Smith", property: "123 Main St", startDate: "2023-06-01", endDate: "2024-05-31", status: "Active", daysLeft: 120 },
+    { tenant: "Sarah Johnson", property: "456 Oak Ave", startDate: "2023-09-01", endDate: "2024-08-31", status: "Active", daysLeft: 213 },
+    { tenant: "Mike Wilson", property: "789 Pine St", startDate: "2022-12-01", endDate: "2024-02-15", status: "Expiring Soon", daysLeft: 15 },
+  ];
+
+  const getLeaseStatusColor = (status: string) => {
+    switch (status) {
+      case "Active": return "bg-success text-white";
+      case "Expiring Soon": return "bg-warning text-white";
+      case "Expired": return "bg-danger text-white";
+      case "Renewed": return "bg-info text-white";
+      default: return "bg-muted";
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -194,6 +213,104 @@ const OwnerDashboard = () => {
         </Card>
       </div>
 
+      {/* Lease Management */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Lease Status Overview */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="w-5 h-5" />
+                Lease Management
+              </CardTitle>
+              <CardDescription>Current lease agreements and renewals</CardDescription>
+            </div>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Eye className="w-4 h-4" />
+              View All
+            </Button>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {leaseStatus.map((lease, index) => (
+              <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-medium">{lease.tenant}</span>
+                    <Badge className={`text-xs ${getLeaseStatusColor(lease.status)}`}>
+                      {lease.status}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{lease.property}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {lease.startDate} - {lease.endDate} • {lease.daysLeft} days left
+                  </p>
+                </div>
+                <div className="text-right">
+                  {lease.status === "Expiring Soon" && (
+                    <Button size="sm" variant="outline" className="text-warning border-warning">
+                      <AlertTriangle className="w-4 h-4 mr-1" />
+                      Renew
+                    </Button>
+                  )}
+                  {lease.status === "Active" && (
+                    <Button size="sm" variant="ghost">
+                      View Details
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Lease Actions */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="w-5 h-5" />
+              Lease Actions
+            </CardTitle>
+            <CardDescription>Manage lease agreements and renewals</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="p-4 border rounded-lg bg-warning/5 border-warning/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertTriangle className="w-4 h-4 text-warning" />
+                  <span className="font-medium text-warning">1 Lease Expiring Soon</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Mike Wilson's lease at 789 Pine St expires in 15 days
+                </p>
+                <Button size="sm" className="gap-2">
+                  <FileText className="w-4 h-4" />
+                  Send Renewal Notice
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <Button variant="outline" className="h-16 flex-col gap-1">
+                  <Plus className="w-5 h-5" />
+                  <span className="text-sm">New Lease</span>
+                </Button>
+                <Button variant="outline" className="h-16 flex-col gap-1">
+                  <FileText className="w-5 h-5" />
+                  <span className="text-sm">Templates</span>
+                </Button>
+                <Button variant="outline" className="h-16 flex-col gap-1">
+                  <Calendar className="w-5 h-5" />
+                  <span className="text-sm">Renewals</span>
+                </Button>
+                <Button variant="outline" className="h-16 flex-col gap-1">
+                  <Eye className="w-5 h-5" />
+                  <span className="text-sm">All Leases</span>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Quick Actions */}
       <Card>
         <CardHeader>
@@ -215,8 +332,8 @@ const OwnerDashboard = () => {
               <span className="text-sm">Schedule Maintenance</span>
             </Button>
             <Button variant="outline" className="h-20 flex-col gap-2">
-              <AlertCircle className="w-6 h-6" />
-              <span className="text-sm">Send Reminder</span>
+              <FileText className="w-6 h-6" />
+              <span className="text-sm">Manage Leases</span>
             </Button>
           </div>
         </CardContent>

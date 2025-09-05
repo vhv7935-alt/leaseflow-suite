@@ -12,7 +12,10 @@ import {
   Plus,
   Eye,
   Phone,
-  Mail
+  Mail,
+  AlertTriangle,
+  Clock,
+  CheckCircle
 } from "lucide-react";
 
 const TenantDashboard = () => {
@@ -48,6 +51,21 @@ const TenantDashboard = () => {
     { name: "Lease Agreement", type: "PDF", size: "2.4 MB", date: "2023-06-01" },
     { name: "Rent Receipt - Jan 2024", type: "PDF", size: "156 KB", date: "2024-01-01" },
     { name: "Move-in Checklist", type: "PDF", size: "890 KB", date: "2023-06-01" },
+  ];
+
+  const leaseInfo = {
+    status: "Active",
+    daysUntilExpiry: 120,
+    autoRenewal: false,
+    renewalOption: true,
+    lastRenewalDate: null,
+    earlyTerminationAllowed: false
+  };
+
+  const leaseDocuments = [
+    { name: "Current Lease Agreement", type: "PDF", size: "2.4 MB", date: "2023-06-01", status: "Active" },
+    { name: "Lease Amendment #1", type: "PDF", size: "890 KB", date: "2023-08-15", status: "Active" },
+    { name: "Renewal Notice Template", type: "PDF", size: "456 KB", date: "2023-06-01", status: "Template" },
   ];
 
   const getStatusColor = (status: string) => {
@@ -206,6 +224,60 @@ const TenantDashboard = () => {
         </Card>
       </div>
 
+      {/* Lease Management */}
+      <Card className="border-info/20 bg-gradient-to-r from-info/5 to-info/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="w-5 h-5 text-info" />
+            Lease Management
+          </CardTitle>
+          <CardDescription>Your current lease agreement status and options</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className={`text-2xl font-bold mb-2 ${leaseInfo.status === 'Active' ? 'text-success' : 'text-warning'}`}>
+                {leaseInfo.status}
+              </div>
+              <p className="text-sm text-muted-foreground">Current Status</p>
+            </div>
+            <div className="text-center">
+              <div className={`text-2xl font-bold mb-2 ${leaseInfo.daysUntilExpiry <= 30 ? 'text-warning' : 'text-primary'}`}>
+                {leaseInfo.daysUntilExpiry}
+              </div>
+              <p className="text-sm text-muted-foreground">Days Until Expiry</p>
+            </div>
+            <div className="text-center">
+              <div className={`text-lg font-semibold mb-2 ${leaseInfo.renewalOption ? 'text-success' : 'text-muted-foreground'}`}>
+                {leaseInfo.renewalOption ? 'Available' : 'Not Available'}
+              </div>
+              <p className="text-sm text-muted-foreground">Renewal Option</p>
+            </div>
+          </div>
+          
+          {leaseInfo.daysUntilExpiry <= 60 && (
+            <div className="mt-6 p-4 bg-warning/10 border border-warning/20 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle className="w-4 h-4 text-warning" />
+                <span className="font-medium text-warning">Lease Expiring Soon</span>
+              </div>
+              <p className="text-sm text-muted-foreground mb-3">
+                Your lease expires on {tenantInfo.leaseEnd}. Consider renewing to avoid any disruption.
+              </p>
+              <div className="flex gap-2">
+                <Button size="sm" className="gap-2">
+                  <FileText className="w-4 h-4" />
+                  Request Renewal
+                </Button>
+                <Button size="sm" variant="outline">
+                  View Options
+                </Button>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Property Info & Documents */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Property Information */}
@@ -252,15 +324,15 @@ const TenantDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Documents */}
+        {/* Lease Documents */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                My Documents
+                Lease Documents
               </CardTitle>
-              <CardDescription>Lease agreements and receipts</CardDescription>
+              <CardDescription>Lease agreements and related documents</CardDescription>
             </div>
             <Button size="sm" variant="outline" className="gap-2">
               <Upload className="w-4 h-4" />
@@ -268,15 +340,23 @@ const TenantDashboard = () => {
             </Button>
           </CardHeader>
           <CardContent className="space-y-4">
-            {documents.map((doc, index) => (
+            {leaseDocuments.map((doc, index) => (
               <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <FileText className="w-8 h-8 text-primary" />
+                  <div className="relative">
+                    <FileText className="w-8 h-8 text-primary" />
+                    {doc.status === "Active" && (
+                      <CheckCircle className="w-3 h-3 text-success absolute -top-1 -right-1" />
+                    )}
+                  </div>
                   <div>
                     <p className="font-medium">{doc.name}</p>
                     <p className="text-xs text-muted-foreground">
                       {doc.type} • {doc.size} • {doc.date}
                     </p>
+                    <Badge className={`text-xs mt-1 ${doc.status === 'Active' ? 'bg-success text-white' : 'bg-muted'}`}>
+                      {doc.status}
+                    </Badge>
                   </div>
                 </div>
                 <Button size="sm" variant="ghost">
@@ -287,6 +367,41 @@ const TenantDashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Regular Documents */}
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="w-5 h-5" />
+              Other Documents
+            </CardTitle>
+            <CardDescription>Receipts and other property documents</CardDescription>
+          </div>
+          <Button size="sm" variant="outline" className="gap-2">
+            <Upload className="w-4 h-4" />
+            Upload
+          </Button>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {documents.map((doc, index) => (
+            <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+              <div className="flex items-center gap-3">
+                <FileText className="w-8 h-8 text-primary" />
+                <div>
+                  <p className="font-medium">{doc.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {doc.type} • {doc.size} • {doc.date}
+                  </p>
+                </div>
+              </div>
+              <Button size="sm" variant="ghost">
+                <Eye className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
 
       {/* Quick Actions */}
       <Card>
@@ -309,8 +424,8 @@ const TenantDashboard = () => {
               <span className="text-sm">Schedule Inspection</span>
             </Button>
             <Button variant="outline" className="h-20 flex-col gap-2">
-              <Upload className="w-6 h-6" />
-              <span className="text-sm">Upload Document</span>
+              <FileText className="w-6 h-6" />
+              <span className="text-sm">Lease Renewal</span>
             </Button>
           </div>
         </CardContent>
