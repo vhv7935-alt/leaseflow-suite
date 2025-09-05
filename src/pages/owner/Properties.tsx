@@ -1,22 +1,30 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Building2, 
-  MapPin, 
-  Users, 
-  DollarSign, 
+import AddPropertyDialog from "@/components/AddPropertyDialog";
+import {
+  Building2,
+  MapPin,
+  Users,
+  DollarSign,
   Plus,
   Search,
   Filter,
   Eye,
   Edit,
-  Settings
+  Settings,
 } from "lucide-react";
 
 const Properties = () => {
-  const properties = [
+  const [properties, setProperties] = useState([
     {
       id: 1,
       name: "Sunset Apartments A-1",
@@ -27,7 +35,7 @@ const Properties = () => {
       rent: 1200,
       tenant: "John Smith",
       status: "Occupied",
-      image: "/placeholder.svg"
+      image: "/placeholder.svg",
     },
     {
       id: 2,
@@ -39,7 +47,7 @@ const Properties = () => {
       rent: 1500,
       tenant: "Sarah Johnson",
       status: "Occupied",
-      image: "/placeholder.svg"
+      image: "/placeholder.svg",
     },
     {
       id: 3,
@@ -51,7 +59,7 @@ const Properties = () => {
       rent: 1100,
       tenant: null,
       status: "Vacant",
-      image: "/placeholder.svg"
+      image: "/placeholder.svg",
     },
     {
       id: 4,
@@ -63,25 +71,37 @@ const Properties = () => {
       rent: 1800,
       tenant: null,
       status: "Available",
-      image: "/placeholder.svg"
-    }
-  ];
+      image: "/placeholder.svg",
+    },
+  ]);
+
+  // Handle property addition
+  const handlePropertyAdded = (newProperty: any) => {
+    setProperties((prev) => [...prev, newProperty]);
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Occupied": return "bg-success text-white";
-      case "Vacant": return "bg-warning text-white";
-      case "Available": return "bg-info text-white";
-      case "Maintenance": return "bg-danger text-white";
-      default: return "bg-muted";
+      case "Occupied":
+        return "bg-success text-white";
+      case "Vacant":
+        return "bg-warning text-white";
+      case "Available":
+        return "bg-info text-white";
+      case "Maintenance":
+        return "bg-danger text-white";
+      default:
+        return "bg-muted";
     }
   };
 
   const stats = {
     total: properties.length,
-    occupied: properties.filter(p => p.status === "Occupied").length,
-    vacant: properties.filter(p => p.status === "Vacant").length,
-    totalIncome: properties.filter(p => p.status === "Occupied").reduce((sum, p) => sum + p.rent, 0)
+    occupied: properties.filter((p) => p.status === "Occupied").length,
+    vacant: properties.filter((p) => p.status === "Vacant").length,
+    totalIncome: properties
+      .filter((p) => p.status === "Occupied")
+      .reduce((sum, p) => sum + p.rent, 0),
   };
 
   return (
@@ -92,17 +112,16 @@ const Properties = () => {
           <h1 className="text-3xl font-bold">Properties</h1>
           <p className="text-muted-foreground">Manage your rental properties</p>
         </div>
-        <Button className="gap-2">
-          <Plus className="w-4 h-4" />
-          Add Property
-        </Button>
+        <AddPropertyDialog onPropertyAdded={handlePropertyAdded} />
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Properties</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Properties
+            </CardTitle>
             <Building2 className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
@@ -116,7 +135,9 @@ const Properties = () => {
             <Users className="h-4 w-4 text-success" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">{stats.occupied}</div>
+            <div className="text-2xl font-bold text-success">
+              {stats.occupied}
+            </div>
           </CardContent>
         </Card>
 
@@ -126,17 +147,23 @@ const Properties = () => {
             <Building2 className="h-4 w-4 text-warning" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-warning">{stats.vacant}</div>
+            <div className="text-2xl font-bold text-warning">
+              {stats.vacant}
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Monthly Income</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Monthly Income
+            </CardTitle>
             <DollarSign className="h-4 w-4 text-info" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-info">${stats.totalIncome.toLocaleString()}</div>
+            <div className="text-2xl font-bold text-info">
+              ${stats.totalIncome.toLocaleString()}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -147,8 +174,8 @@ const Properties = () => {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input 
-                placeholder="Search properties by name, address, or tenant..." 
+              <Input
+                placeholder="Search properties by name, address, or tenant..."
                 className="pl-10"
               />
             </div>
@@ -165,12 +192,16 @@ const Properties = () => {
         {properties.map((property) => (
           <Card key={property.id} className="hover:shadow-lg transition-shadow">
             <div className="aspect-video bg-muted rounded-t-lg relative overflow-hidden">
-              <img 
-                src={property.image} 
+              <img
+                src={property.image}
                 alt={property.name}
                 className="w-full h-full object-cover"
               />
-              <Badge className={`absolute top-3 right-3 ${getStatusColor(property.status)}`}>
+              <Badge
+                className={`absolute top-3 right-3 ${getStatusColor(
+                  property.status
+                )}`}
+              >
                 {property.status}
               </Badge>
             </div>
@@ -193,17 +224,21 @@ const Properties = () => {
                   <span className="capitalize">{property.type}</span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-2xl font-bold text-primary">${property.rent}</div>
+                  <div className="text-2xl font-bold text-primary">
+                    ${property.rent}
+                  </div>
                   <div className="text-sm text-muted-foreground">per month</div>
                 </div>
                 <div className="text-right">
                   {property.tenant ? (
                     <div>
                       <div className="font-medium">{property.tenant}</div>
-                      <div className="text-sm text-muted-foreground">Current Tenant</div>
+                      <div className="text-sm text-muted-foreground">
+                        Current Tenant
+                      </div>
                     </div>
                   ) : (
                     <div className="text-muted-foreground">No Tenant</div>
