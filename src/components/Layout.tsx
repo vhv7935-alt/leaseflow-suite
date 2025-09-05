@@ -13,17 +13,17 @@ const Layout = ({ children, userType = "owner", onLogout }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = userType === "owner" ? [
-    { name: "Dashboard", href: "#", icon: Home, current: true },
-    { name: "Properties", href: "#", icon: Building2, current: false },
-    { name: "Tenants", href: "#", icon: Building2, current: false },
-    { name: "Payments", href: "#", icon: Building2, current: false },
-    { name: "Maintenance", href: "#", icon: Building2, current: false },
-    { name: "Documents", href: "#", icon: Building2, current: false },
+    { name: "Dashboard", href: "/", icon: Home, current: true },
+    { name: "Properties", href: "/owner/properties", icon: Building2, current: false },
+    { name: "Tenants", href: "/owner/tenants", icon: Building2, current: false },
+    { name: "Payments", href: "/owner/payments", icon: Building2, current: false },
+    { name: "Maintenance", href: "/owner/maintenance", icon: Building2, current: false },
+    { name: "Documents", href: "/owner/documents", icon: Building2, current: false },
   ] : [
-    { name: "Dashboard", href: "#", icon: Home, current: true },
-    { name: "My Rent", href: "#", icon: Building2, current: false },
-    { name: "Maintenance", href: "#", icon: Building2, current: false },
-    { name: "Documents", href: "#", icon: Building2, current: false },
+    { name: "Dashboard", href: "/", icon: Home, current: true },
+    { name: "My Rent", href: "/tenant/rent", icon: Building2, current: false },
+    { name: "Maintenance", href: "/tenant/maintenance", icon: Building2, current: false },
+    { name: "Documents", href: "/tenant/documents", icon: Building2, current: false },
   ];
 
   return (
