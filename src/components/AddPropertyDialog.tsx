@@ -120,41 +120,54 @@ const AddPropertyDialog = ({ onPropertyAdded }: AddPropertyDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2">
+        <Button className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-xl transition-all duration-200">
           <Plus className="w-4 h-4" />
           Add Property
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Add New Property</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-[700px] border-0 shadow-2xl bg-white/95 backdrop-blur-xl">
+        <DialogHeader className="space-y-3 pb-6">
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+            Add New Property
+          </DialogTitle>
+          <DialogDescription className="text-slate-600 text-base">
             Fill in the details below to add a new property to your portfolio.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Property Name *</Label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <Label
+                htmlFor="name"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Property Name *
+              </Label>
               <Input
                 id="name"
                 placeholder="e.g., Sunset Apartments A-1"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
                 required
+                className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="type">Property Type *</Label>
+            <div className="space-y-3">
+              <Label
+                htmlFor="type"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Property Type *
+              </Label>
               <Select
                 value={formData.type}
                 onValueChange={(value) => handleInputChange("type", value)}
                 required
               >
-                <SelectTrigger>
+                <SelectTrigger className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="border-0 shadow-xl rounded-xl">
                   <SelectItem value="Apartment">Apartment</SelectItem>
                   <SelectItem value="House">House</SelectItem>
                   <SelectItem value="Condo">Condo</SelectItem>
@@ -165,20 +178,31 @@ const AddPropertyDialog = ({ onPropertyAdded }: AddPropertyDialogProps) => {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="address">Address *</Label>
+          <div className="space-y-3">
+            <Label
+              htmlFor="address"
+              className="text-sm font-semibold text-slate-700"
+            >
+              Address *
+            </Label>
             <Input
               id="address"
               placeholder="e.g., 123 Main Street, Apt 2B"
               value={formData.address}
               onChange={(e) => handleInputChange("address", e.target.value)}
               required
+              className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="bedrooms">Bedrooms *</Label>
+          <div className="grid grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <Label
+                htmlFor="bedrooms"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Bedrooms *
+              </Label>
               <Input
                 id="bedrooms"
                 type="number"
@@ -187,10 +211,16 @@ const AddPropertyDialog = ({ onPropertyAdded }: AddPropertyDialogProps) => {
                 value={formData.bedrooms}
                 onChange={(e) => handleInputChange("bedrooms", e.target.value)}
                 required
+                className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="bathrooms">Bathrooms *</Label>
+            <div className="space-y-3">
+              <Label
+                htmlFor="bathrooms"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Bathrooms *
+              </Label>
               <Input
                 id="bathrooms"
                 type="number"
@@ -200,10 +230,16 @@ const AddPropertyDialog = ({ onPropertyAdded }: AddPropertyDialogProps) => {
                 value={formData.bathrooms}
                 onChange={(e) => handleInputChange("bathrooms", e.target.value)}
                 required
+                className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="rent">Monthly Rent *</Label>
+            <div className="space-y-3">
+              <Label
+                htmlFor="rent"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Monthly Rent *
+              </Label>
               <Input
                 id="rent"
                 type="number"
@@ -212,31 +248,43 @@ const AddPropertyDialog = ({ onPropertyAdded }: AddPropertyDialogProps) => {
                 value={formData.rent}
                 onChange={(e) => handleInputChange("rent", e.target.value)}
                 required
+                className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+          <div className="space-y-3">
+            <Label
+              htmlFor="description"
+              className="text-sm font-semibold text-slate-700"
+            >
+              Description
+            </Label>
             <Textarea
               id="description"
               placeholder="Optional description of the property..."
               value={formData.description}
               onChange={(e) => handleInputChange("description", e.target.value)}
               rows={3}
+              className="border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl resize-none"
             />
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="pt-6">
             <Button
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
               disabled={isLoading}
+              className="px-6 py-2 border-slate-200 hover:bg-slate-100 rounded-xl"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl"
+            >
               {isLoading ? "Adding..." : "Add Property"}
             </Button>
           </DialogFooter>
